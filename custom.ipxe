@@ -11,8 +11,8 @@ choose live_version || goto live_exit
 menu ${os} ${live_version}
 
 :stable
-set squash_file /Data/netbootxyz/assets/PiKiosk/PiKiosk.squashfs
-set kernel_file /Data/netbootxyz/assets/PiKiosk/kernel.img
+set squash_file PiKiosk/PiKiosk.squashfs
+set kernel_file PiKiosk/kernel.img
 goto boot
 
 
