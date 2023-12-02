@@ -1,12 +1,28 @@
 #!ipxe
-###
-### netboot.xyz-custom menu
-###
 
-:start
-echo Hello world!
-sleep 10
-goto custom_exit
+goto ${menu} ||
 
-:custom_exit
+menu ${os}
+
+iseq ${os_arch} arm64 && set os_arch aarch64 ||
+set os PiKiosk
+item stable ${space} ${os} stable
+choose live_version || goto live_exit
+menu ${os} ${live_version}
+
+:stable
+set squash_url ${live_endpoint}/PiKiosk/PiKiosk.squashfs
+set kernel_url ${live_endpoint}/PiKiosk/kernel.img
+goto boot
+
+
+:boot
+imgfree
+kernel ${kernel_url}vmlinuz boot=live fetch=${squash_url} union=overlay username=user vga=788 initrd=initrd.magic ${cmdline}
+initrd ${kernel_url}initrd
+boot
+
+:live_exit
+clear menu
 exit 0
+
