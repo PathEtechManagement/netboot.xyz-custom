@@ -11,18 +11,17 @@ choose live_version || goto live_exit
 menu ${os} ${live_version}
 
 :stable
-set squash_url ${live_endpoint}/PiKiosk/PiKiosk.squashfs
-set kernel_url ${live_endpoint}/PiKiosk/kernel.img
+set squash_file /Data/netbootxyz/assets/PiKiosk/PiKiosk.squashfs
+set kernel_file /Data/netbootxyz/assets/PiKiosk/kernel.img
 goto boot
 
 
 :boot
 imgfree
-kernel ${kernel_url}vmlinuz boot=live fetch=${squash_url} union=overlay username=user vga=788 initrd=initrd.magic ${cmdline}
-initrd ${kernel_url}initrd
+kernel ${kernel_file}vmlinuz boot=live fetch=${squash_file} union=overlay username=user vga=788 initrd=initrd.magic ${cmdline}
+initrd ${kernel_file}initrd
 boot
 
 :live_exit
 clear menu
 exit 0
-
